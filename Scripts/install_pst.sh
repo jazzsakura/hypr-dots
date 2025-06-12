@@ -57,6 +57,29 @@ else
     echo -e "\033[0;33m[WARNING]\033[0m dolphin is not installed..."
 fi
 
+# greetd-tuigreet
+if pkg_installed greetd-tuigreet; then
+
+    echo -e "\033[0;32m[DISPLAYMANAGER]\033[0m detected // greetd-tuigreet"
+    if [ ! -d /etc/greetd ]; then
+        sudo mkdir -p /etc/greetd
+    fi
+
+    if [ ! -f /etc/greetd/config.toml.bkp ]; then
+        echo -e "\033[0;32m[DISPLAYMANAGER]\033[0m configuring greetd-tuigreet..."
+        sudo touch /etc/greetd/config.toml.bkp
+        sudo cp /etc/greetd/config.toml /etc/greetd/config.toml.bkp
+        curl 'https://raw.githubusercontent.com/jazzsakura/dotfiles/refs/heads/main/.scripts/greetd/config.toml' > /tmp/config.toml
+        sudo cp /tmp/config.toml /etc/greetd/config.toml
+        sudo sed -e 's|user = "[[:alnum:]]*"|user = '"$HOME"'|' /etc/greetd/config.toml
+    else
+        echo -e "\033[0;33m[SKIP]\033[0m greetd-tuigreet is already configured..."
+    fi
+
+else
+    echo -e "\033[0;33m[WARNING]\033[0m greetd-tuigreet is not installed..."
+fi
+
 # shell
 "${scrDir}/restore_shl.sh"
 
