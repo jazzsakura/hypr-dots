@@ -70,8 +70,8 @@ if pkg_installed greetd-tuigreet; then
         sudo touch /etc/greetd/config.toml.bkp
         sudo cp /etc/greetd/config.toml /etc/greetd/config.toml.bkp
         curl 'https://raw.githubusercontent.com/jazzsakura/dotfiles/refs/heads/main/.scripts/greetd/config.toml' > /tmp/config.toml
+	sed -e '$s|user = "[[:alnum:]]*"|user = '\"$(whoami)\"'|' -i /tmp/config.toml
         sudo cp /tmp/config.toml /etc/greetd/config.toml
-        sudo sed -e 's|user = "[[:alnum:]]*"|user = '"$HOME"'|' -i /etc/greetd/config.toml
     else
         echo -e "\033[0;33m[SKIP]\033[0m greetd-tuigreet is already configured..."
     fi
