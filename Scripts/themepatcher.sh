@@ -102,7 +102,7 @@ print_prompt "Patching" -g " --// ${Fav_Theme} //-- "  "from " -b "${Theme_Dir}\
 Fav_Theme_Dir="${Theme_Dir}/Configs/.config/hyde/themes/${Fav_Theme}"
 [ ! -d "${Fav_Theme_Dir}" ] && print_prompt -r "[ERROR] " "'${Fav_Theme_Dir}'" -y " Do not Exist" && exit 1
 
-config=$(find "${dcolDir}" -type f -name "*.dcol" | awk -v favTheme="${Fav_Theme}" -F 'Wall-Dcol/' '{gsub(/\.dcol$/, ".theme"); print ".config/hyde/themes/" favTheme "/" $2}')
+config=$(find "${Fav_Theme_Dir}" -type f -name "*.theme" | awk -v favTheme="${Fav_Theme}" -F 'themes/' '{gsub(/\.dcol$/, ".theme"); print ".config/hyde/themes/" $2}')
 restore_list=""
 
 while IFS= read -r fchk; do
